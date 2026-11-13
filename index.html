@@ -432,6 +432,58 @@ a.svc-i:hover .go { text-decoration: underline; }
   .wy-years b { font-size: 17px; }
   .wy-years span { font-size: 11px; letter-spacing: .02em; }
 }
+
+/* solutions: light section with a printer */
+.pr-s { background: #ECE8E2; color: #17181A; border-top: 0 !important; }
+.pr-s + .sec { border-top: 0; }
+.pr-s .t { color: #17181A; text-align: center; margin: 0 auto; max-width: 15em; }
+.pr-intro { margin: 20px auto 0; text-align: center; font-size: 19px; line-height: 1.55; color: #4A4B50; max-width: 30em; }
+.pr { max-width: 760px; width: 100%; margin: 48px auto 0; }
+.pr-lid { height: 26px; margin: 0 28px; background: #2E2F34; border-radius: 6px 6px 0 0; }
+.pr-lid { position: relative; }
+.pr-lid::before { content: ""; position: absolute; left: 22%; right: 22%; top: -18px; height: 18px; background: #FBF9F6; border: 1px solid #D6D0C8; border-bottom: 0; }
+.pr-lid::after { content: ""; position: absolute; left: 20%; right: 20%; top: -4px; height: 4px; background: #3A3B41; }
+.pr-body { background: #26272B; border-radius: 6px; padding: 22px 22px 0; }
+.pr-panel { display: grid; grid-template-columns: minmax(0, 1fr) 44px; gap: 16px; align-items: stretch; }
+.pr-screen { background: #121315; border: 1px solid #36373C; border-radius: 6px; padding: 12px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.pr-b { font: inherit; font-size: 14px; font-weight: 600; line-height: 1.25; text-align: left; color: #A9AAB0; background: #1F2023; border: 1px solid #36373C; border-radius: 4px; padding: 12px; min-height: 64px; cursor: pointer; transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
+.pr-b:hover { color: var(--ink); border-color: #5A5B61; }
+.pr-b[aria-pressed="true"] { background: var(--grad); border-color: transparent; color: #fff; }
+.pr-b:focus-visible { outline: 3px solid #F6A46F; outline-offset: 2px; }
+.pr-side { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 6px; }
+.pr-led { width: 10px; height: 10px; border-radius: 50%; background: #3A3B41; transition: background-color .3s ease; }
+.pr.busy .pr-led { background: #EE6A2E; }
+.pr-key { width: 32px; height: 32px; border-radius: 50%; border: 1px solid #44454B; }
+.pr-slot { height: 14px; margin: 20px 20px 0; background: #0E0F10; border-radius: 3px 3px 0 0; }
+.pr-out { overflow: hidden; margin: 0 64px; position: relative; }
+.pr-sheet { background: #FBF9F6; border: 1px solid #D6D0C8; border-top: 0; padding: 26px 30px 30px; transform: translateY(-100%); }
+.pr-sheet.on { transform: none; }
+.pr-sheet.print { animation: prPrint 2.4s cubic-bezier(.45,.05,.35,1) both; }
+.pr-sheet.drop { animation: prDrop .6s ease-in both; }
+@keyframes prPrint { 0% { transform: translateY(-100%); } 100% { transform: translateY(0); } }
+@keyframes prDrop { from { transform: translateY(0); opacity: 1; } to { transform: translateY(12%); opacity: 0; } }
+.pr-top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #8A857E; padding-bottom: 12px; border-bottom: 1px solid #E2DCD4; }
+.pr-title { font-size: 24px; line-height: 1.2; color: #17181A; margin-top: 20px; }
+.pr-list { list-style: none; margin-top: 18px; border-top: 2px solid #17181A; }
+.pr-list li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dashed #CFC8BF; font-size: 15px; font-weight: 600; color: #26272B; }
+.pr-list li span { color: #D62F4C; font-family: var(--display); font-weight: 800; }
+.pr-tray { height: 10px; margin: 0 20px; background: #C9C3BA; border-radius: 0 0 6px 6px; }
+@media (max-width: 640px) { .pr-screen { grid-template-columns: 1fr 1fr !important; } }
+@media (max-width: 640px) {
+  .pr-body { padding: 14px 14px 0; }
+  .pr-lid { margin: 0 18px; height: 20px; }
+  .pr-panel { grid-template-columns: minmax(0, 1fr); }
+  .pr-side { display: none; }
+  .pr-screen { padding: 8px; gap: 6px; }
+  .pr-b { font-size: 13px; padding: 10px; min-height: 58px; }
+  .pr-slot { margin: 14px 12px 0; }
+  .pr { margin-top: 32px; }
+  .pr-out { margin: 0 22px; }
+  .pr-sheet { padding: 18px 18px 22px; }
+  .pr-intro { font-size: 17px; }
+  .pr-title { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .pr-sheet.print, .pr-sheet.drop { animation: none; transform: none; } }
 </style>
 </head>
 <body>
@@ -557,6 +609,36 @@ a.svc-i:hover .go { text-decoration: underline; }
           <h3>Сервис низ цела земја</h3>
           <p class="wy-proof">Седиште: Франклин Рузвелт 33А, Скопје</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec pr-s" id="resenija">
+    <div class="wrap">
+      <h2 class="t">Решенија за секојдневната работа на вашата компанија.</h2>
+      <p class="pr-intro">Помагаме да изберете опрема според бројот на корисници, обемот на печатење и потребите на работното место.</p>
+      <div class="pr">
+        <div class="pr-lid" aria-hidden="true"></div>
+        <div class="pr-body">
+          <div class="pr-panel">
+            <div class="pr-screen" role="group" aria-label="Изберете тип на компанија">
+              <button class="pr-b" type="button" aria-pressed="true" data-i="0">Мали и средни компании</button>
+              <button class="pr-b" type="button" aria-pressed="false" data-i="1">Канцеларии и професионални служби</button>
+              <button class="pr-b" type="button" aria-pressed="false" data-i="2">Образовни и јавни институции</button>
+              <button class="pr-b" type="button" aria-pressed="false" data-i="3">Компании со голем обем на печатење</button>
+            </div>
+            <div class="pr-side" aria-hidden="true"><span class="pr-led"></span><span class="pr-key"></span><span class="pr-key"></span></div>
+          </div>
+          <div class="pr-slot" aria-hidden="true"></div>
+        </div>
+        <div class="pr-out">
+          <article class="pr-sheet" aria-live="polite">
+            <p class="pr-top"><span>Импегна</span><span class="pr-no"></span></p>
+            <h3 class="pr-title"></h3>
+            <ul class="pr-list"></ul>
+          </article>
+        </div>
+        <div class="pr-tray" aria-hidden="true"></div>
       </div>
     </div>
   </section>
@@ -1018,6 +1100,60 @@ a.svc-i:hover .go { text-decoration: underline; }
     tabs.addEventListener("scroll", edge); window.addEventListener("resize", edge); edge();
     model.addEventListener("input", line);
     pick(0, false);
+  })();
+
+
+  /* solutions printer */
+  (function () {
+    var root = document.querySelector(".pr");
+    if (!root) return;
+    var data = [{"t": "Мали и средни компании", "k": [["Мултифункциски", "01"], ["Изнајмување", "02"], ["Сервис", "03"]]}, {"t": "Канцеларии и професионални служби", "k": [["Скенери", "01"], ["Ласерски печатачи", "02"], ["Одржување", "03"]]}, {"t": "Образовни и јавни институции", "k": [["Копири", "01"], ["Тонери", "02"], ["Одржување", "03"]]}, {"t": "Компании со голем обем на печатење", "k": [["imageRUNNER копири", "01"], ["Финишер", "02"], ["Изнајмување", "03"]]}];
+    var no = root.querySelector(".pr-no");
+    var sheet = root.querySelector(".pr-sheet");
+    var title = root.querySelector(".pr-title");
+    var list = root.querySelector(".pr-list");
+    var btns = root.querySelectorAll(".pr-b");
+    var cur = -1, timer = null;
+    function fill(i) {
+      title.textContent = data[i].t;
+      list.innerHTML = "";
+      no.textContent = "0" + (i + 1) + " / 0" + data.length;
+      data[i].k.forEach(function (k) {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(k[0]));
+        var sp = document.createElement("span"); sp.textContent = k[1];
+        li.appendChild(sp);
+        list.appendChild(li);
+      });
+    }
+    function print(i) {
+      if (i === cur) return;
+      var first = cur < 0;
+      cur = i;
+      Array.prototype.forEach.call(btns, function (b, k) { b.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+      clearTimeout(timer);
+      root.classList.add("busy");
+      var go = function () {
+        fill(i);
+        sheet.classList.remove("drop", "on");
+        void sheet.offsetWidth;
+        sheet.classList.add("print");
+        timer = setTimeout(function () { sheet.classList.remove("print"); sheet.classList.add("on"); root.classList.remove("busy"); }, 2400);
+      };
+      if (first) { go(); return; }
+      sheet.classList.remove("print");
+      sheet.classList.add("on", "drop");
+      timer = setTimeout(go, 600);
+    }
+    Array.prototype.forEach.call(btns, function (b) {
+      b.addEventListener("click", function () { print(+b.getAttribute("data-i")); });
+    });
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { io.disconnect(); print(0); }
+      }, { threshold: 0.35 });
+      io.observe(root);
+    } else { print(0); }
   })();
 
   /* rental request */
