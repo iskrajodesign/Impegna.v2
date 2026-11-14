@@ -613,7 +613,9 @@ footer .wrap { grid-template-columns: auto auto auto; justify-content: space-bet
 
 /* Services on white, colours inverted */
 #uslugi { --ink: #17181A; --mute: #55565C; --line: #DDD9D3; background: #FFFFFF; color: var(--ink); border-top: 0; }
-#uslugi .svc-i .n { color: #D9D5CE; }
+.svc-i .n { color: #8A8B91; }
+#uslugi .svc-i .n { color: #767169; }
+.pr-top { color: #6F6A62; }
 #uslugi .svc-i .go { color: #C9481A; }
 
 /* Products: photo on white from edge to edge, title below */
@@ -1234,6 +1236,7 @@ function sayLine(m, d) {
       document.getElementById("v-" + n).classList.toggle("on", n === h);
     });
     document.documentElement.setAttribute("data-v", h);
+    if (h === "pocetna" && !anchor && location.hash && window.history && history.replaceState) history.replaceState(null, "", location.pathname + location.search);
     Array.prototype.forEach.call(document.querySelectorAll(".nav a, .bar-cta"), function (a) {
       if (a.getAttribute("data-v") === raw) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
     });
