@@ -130,6 +130,19 @@ main, footer { position: relative; z-index: 1; }
 .panel .btn.ghost { color: var(--ink); }
 .formgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .formgrid .full { grid-column: 1 / -1; }
+.panel input[type="tel"], .panel input[type="email"] { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--field); border: 1px solid var(--line); border-radius: 6px; padding: 13px 14px; }
+.panel input, .panel textarea { min-width: 0; max-width: 100%; }
+.panel textarea { resize: vertical; }
+.panel .opt-l { font-weight: 400; color: var(--mute); }
+.panel input[aria-invalid="true"], .panel textarea[aria-invalid="true"] { border-color: #F26B5B; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.fstat { margin-top: 16px; font-size: 16px; line-height: 1.5; }
+.fstat:empty { display: none; }
+.fstat.ok { background: #1F2B22; border: 1px solid #4E8A5C; color: #CFE8D4; border-radius: 6px; padding: 14px; }
+.fstat.err { background: #2E1F20; border: 1px solid #C2564B; color: #F3D0CB; border-radius: 6px; padding: 14px; }
+.priv { margin-top: 12px; font-size: 14px; line-height: 1.5; color: var(--mute); }
+.panel .btn[disabled] { opacity: .6; cursor: wait; }
+@media (max-width: 520px) { .formgrid { grid-template-columns: 1fr; } }
 .checks { display: grid; gap: 10px; }
 .checks label { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 400; color: var(--ink); margin: 0; cursor: pointer; }
 .checks input { width: 20px; height: 20px; accent-color: #EE6A2E; flex: none; }
@@ -308,7 +321,7 @@ a.svc-i:hover .go { text-decoration: underline; }
   .band .cta { flex-direction: row; justify-content: flex-start; }
 }
 @media (max-width: 640px) {
-  .svc, .tiles, .tiles.one, .why-list { grid-template-columns: 1fr; }
+  .svc, .svc:not(.three), .tiles, .tiles.one, .why-list { grid-template-columns: 1fr; }
   .svc-i, .svc-i + .svc-i { padding-left: 0; border-left: 0; }
   .svc-i + .svc-i { margin-top: 40px; border-top: 1px solid var(--line); }
   .svc-i + .svc-i::before, .svc-i:nth-child(3)::before { left: 0; }
@@ -319,6 +332,7 @@ a.svc-i:hover .go { text-decoration: underline; }
   .where .map { height: 340px; }
   .scan { left: -12px; right: -12px; }
   .band .cta { flex-direction: column; }
+  h1, h2, h3 { overflow-wrap: break-word; }
 }
 .band .wrap > h2, .band .wrap > p { grid-column: 1; }
 .band .wrap > .cta { grid-column: 2; grid-row: 1 / span 2; }
@@ -860,7 +874,7 @@ a.svc-i:hover .go { text-decoration: underline; }
 <div class="view" id="v-kontakt">
   <div class="wrap phead">
     <h1>Контакт</h1>
-    <p class="lead">Јавете се, пишете ни или дојдете. Ако имате дефект, подгответе порака и прочитајте ја по телефон.</p>
+    <p class="lead">Јавете се, пишете ни или дојдете. Ако имате дефект, пратете ни порака преку формата и ќе ви се јавиме.</p>
   </div>
   <section class="sec">
     <div class="wrap cols">
@@ -876,17 +890,22 @@ a.svc-i:hover .go { text-decoration: underline; }
         <div class="pw"><iframe class="map" style="margin-top:40px" title="Мапа: Импегна, Франклин Рузвелт 33А, Скопје" src="https://maps.google.com/maps?q=Impegna%2C%20Franklin%20Ruzvelt%2033A%2C%20Skopje%201000&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
         <div class="cta" style="margin-top:20px"><a class="btn" href="https://maps.app.goo.gl/dx4CzTyKGWRJqQ638"><span>Отвори во <span class="nb">Google Maps</span></span></a></div>
       </div>
-      <div class="pw"><aside class="panel" id="msg" aria-label="Подготви порака">
-        <h2>Подгответе порака</h2>
-        <div class="formgrid">
-          <div><label for="m-name">Име</label><input id="m-name" type="text" autocomplete="off"></div>
-          <div><label for="m-tel">Телефон</label><input id="m-tel" type="text" autocomplete="off"></div>
-          <div class="full"><label for="m-dev">Апарат</label><input id="m-dev" type="text" placeholder="на пример Canon imageRUNNER" autocomplete="off"></div>
-          <div class="full"><label for="m-prob">Што се случува</label><textarea id="m-prob" rows="4" placeholder="на пример, хартијата се заглавува, на екранот излегува код"></textarea></div>
-        </div>
-        <p class="line" id="m-out"></p>
-        <button class="btn ghost" id="m-copy" type="button">Копирај го текстот</button>
-        <a class="btn" href="tel:+38923111275"><span>Јавете се: <span class="nb">02 3111 275</span></span></a>
+      <div class="pw"><aside class="panel" id="msg" aria-label="Пратете порака">
+        <h2>Пратете ни порака</h2>
+        <form id="m-form" novalidate>
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="formgrid">
+            <div><label for="m-name">Име и презиме</label><input id="m-name" name="name" type="text" autocomplete="name" required></div>
+            <div><label for="m-tel">Телефон</label><input id="m-tel" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+            <div class="full"><label for="m-mail">Е-пошта <span class="opt-l">(по желба)</span></label><input id="m-mail" name="email" type="email" inputmode="email" autocomplete="email"></div>
+            <div class="full"><label for="m-dev">Апарат</label><input id="m-dev" name="device" type="text" placeholder="на пример Canon imageRUNNER" autocomplete="off"></div>
+            <div class="full"><label for="m-prob">Што се случува</label><textarea id="m-prob" name="message" rows="4" placeholder="на пример, хартијата се заглавува, на екранот излегува код" required></textarea></div>
+          </div>
+          <p class="fstat" id="m-stat" role="status" aria-live="polite"></p>
+          <button class="btn" id="m-send" type="submit">Прати</button>
+          <p class="priv">Податоците ги користиме само за да ви одговориме на ова барање. Не ги делиме и не праќаме реклами.</p>
+        </form>
+        <a class="btn ghost" href="tel:+38923111275"><span>Или јавете се: <span class="nb">02 3111 275</span></span></a>
       </aside></div>
     </div>
   </section>
@@ -1178,22 +1197,49 @@ a.svc-i:hover .go { text-decoration: underline; }
   });
   rentRender();
 
-  /* contact message */
-  var mCopy = document.getElementById("m-copy");
-  function msgRender() {
-    var v = function (id) { return document.getElementById(id).value.trim(); };
-    var t = "Здраво, јас сум " + (v("m-name") || "(име)") + ". Мојот телефон е " + (v("m-tel") || "(телефон)") + ". Имам " + (v("m-dev") || "апарат од Canon") + ". " + (v("m-prob") ? "Проблемот е: " + v("m-prob") + "." : "Проблемот е: (опис).");
-    document.getElementById("m-out").textContent = t;
-    return t;
-  }
-  ["m-name","m-tel","m-dev","m-prob"].forEach(function (id) { document.getElementById(id).addEventListener("input", msgRender); });
-  msgRender();
-  mCopy.addEventListener("click", function () {
-    var t = msgRender();
-    try {
-      navigator.clipboard.writeText(t).then(function () { mCopy.textContent = "Копирано"; }, function () { mCopy.textContent = "Означете го текстот и копирајте го сами"; });
-    } catch (e) { mCopy.textContent = "Означете го текстот и копирајте го сами"; }
-    setTimeout(function () { mCopy.textContent = "Копирај го текстот"; }, 2500);
+  /* contact form: sends straight to info@impegna.mk through FormSubmit (no key; first send needs a one-time activation click in that mailbox) */
+  var mForm = document.getElementById("m-form");
+  var mTo = "info@impegna.mk"; /* after activation this can be swapped for the FormSubmit alias */
+  var mSend = document.getElementById("m-send");
+  var mStat = document.getElementById("m-stat");
+  function mSay(cls, txt) { mStat.className = "fstat " + cls; mStat.textContent = txt; }
+  mForm.addEventListener("input", function (e) { if (e.target.getAttribute("aria-invalid") === "true") e.target.setAttribute("aria-invalid", "false"); });
+  mForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = function (id) { return document.getElementById(id); };
+    var bad = [];
+    [["m-name","име"],["m-tel","телефон"],["m-prob","опис на проблемот"]].forEach(function (p) {
+      var el = f(p[0]); var empty = !el.value.trim();
+      el.setAttribute("aria-invalid", empty ? "true" : "false"); if (empty) bad.push(p[1]);
+    });
+    var tel = f("m-tel").value.replace(/[^0-9+]/g, "");
+    if (f("m-tel").value.trim() && tel.length < 6) { f("m-tel").setAttribute("aria-invalid","true"); bad.push("точен телефон"); }
+    var mail = f("m-mail").value.trim();
+    if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { f("m-mail").setAttribute("aria-invalid","true"); bad.push("точна е-пошта"); }
+    else f("m-mail").setAttribute("aria-invalid","false");
+    if (bad.length) { mSay("err", "Пополнете: " + bad.join(", ") + "."); return; }
+    if (mForm._honey.value) return;
+    var data = {
+      _subject: "Ново барање од сајтот Импегна",
+      _template: "table",
+      _captcha: "false",
+      _honey: "",
+      "Име": f("m-name").value.trim(),
+      "Телефон": f("m-tel").value.trim(),
+      "Е-пошта": mail || "не е наведена",
+      "Апарат": f("m-dev").value.trim() || "не е наведен",
+      "Што се случува": f("m-prob").value.trim()
+    };
+    if (mail) { data.email = mail; data._replyto = mail; }
+    mSend.disabled = true; mSend.textContent = "Се праќа...";
+    fetch("https://formsubmit.co/ajax/" + mTo, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j && (j.success === true || j.success === "true")) { mForm.reset(); mSay("ok", "Пораката е пратена. Ќе ви се јавиме во работно време, понеделник до петок од 8:00 до 16:30."); }
+        else throw new Error("fail");
+      })
+      .catch(function () { mSay("err", "Пораката не замина. Проверете ја врската и обидете се пак, или јавете се на 02 3111 275."); })
+      .then(function () { mSend.disabled = false; mSend.textContent = "Прати"; });
   });
 
   route();
