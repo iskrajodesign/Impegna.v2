@@ -11,6 +11,7 @@
 (function () {
   var d = document.documentElement, v = (location.hash || "").replace("#", "");
   var n = ["pocetna", "prodazba", "odrzuvanje", "iznajmuvanje", "servis", "produkti", "galerija", "kontakt"];
+  if (v === "poraka") v = "kontakt";
   if (v === "uslugi" || n.indexOf(v) < 0) v = "pocetna";
   d.setAttribute("data-v", v);
   var en = false;
@@ -615,6 +616,8 @@ footer .wrap { grid-template-columns: auto auto auto; justify-content: space-bet
 #uslugi { --ink: #17181A; --mute: #55565C; --line: #DDD9D3; background: #FFFFFF; color: var(--ink); border-top: 0; }
 .svc-i .n { color: #8A8B91; }
 #uslugi .svc-i .n { color: #767169; }
+#msg { scroll-margin-top: 96px; }
+@media (max-width: 900px) { .nav.open > * { flex-shrink: 0; } .nav.open .nav-lang { order: -1; margin: 8px 0 16px; padding: 0; } .nav.open .nav-lang button { display: inline-flex; align-items: center; justify-content: center; padding: 0 12px; line-height: 1; } }
 .pr-top { color: #6F6A62; }
 #uslugi .svc-i .go { color: #C9481A; }
 
@@ -763,7 +766,7 @@ html.i18n-wait body { visibility: hidden; }
       <a href="#produkti" data-v="produkti">Продукти</a>
       <a href="#galerija" data-v="galerija">Галерија</a>
       <a href="#kontakt" data-v="kontakt">Контакт</a>
-      <a class="btn nav-cta" href="tel:+38923111275"><span>Јавете се: <span class="nb">02 3111 275</span></span></a>
+      <a class="btn nav-cta" href="tel:+38923111275">Побарајте нè</a>
       <div class="lang nav-lang" data-notr role="group" aria-label="Јазик / Language"><button type="button" data-l="mk" lang="mk">МК</button><button type="button" data-l="en" lang="en">EN</button></div>
     </nav>
     <div class="bar-end"><div class="lang bar-lang" data-notr role="group" aria-label="Јазик / Language"><button type="button" data-l="mk" lang="mk">МК</button><button type="button" data-l="en" lang="en">EN</button></div><a class="bar-cta" href="#kontakt" data-v="kontakt">Контакт</a></div>
@@ -943,7 +946,7 @@ html.i18n-wait body { visibility: hidden; }
       <p>Ако имате модел и код за грешка, кажете ги. Така сервисерот најбрзо ќе разбере за што станува збор.</p>
       <div class="cta">
         <a class="btn" href="tel:+38923111275">Побарајте сервисер</a>
-        <a class="btn ghost" href="#kontakt">Пишете ни порака</a>
+        <a class="btn ghost" href="#poraka">Пишете ни порака</a>
       </div>
     </div>
   </section>
@@ -954,7 +957,7 @@ html.i18n-wait body { visibility: hidden; }
   <div class="wrap phead">
     <h1>Продажба</h1>
     <p class="lead">Продаваме Canon печатачи, мултифункциски апарати, скенери, копири и плотери. Пред да купите, разговарајте со нашиот тим за продажба.</p>
-    <div class="cta"><a class="btn" href="tel:+38923111275">Јавете се на продажба</a><a class="btn ghost" href="#produkti">Погледнете ги продуктите</a></div>
+    <div class="cta"><a class="btn" href="tel:+38923111275">Побарајте нè</a><a class="btn ghost" href="#produkti">Погледнете ги продуктите</a></div>
   </div>
 <div class="rib flip" aria-hidden="true"><svg viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 96 C 260 20, 520 160, 820 92 S 1250 30, 1440 84 L1440 134 C 1260 84, 1060 156, 820 140 S 280 90, 0 150 Z" fill="url(#gw)"/></svg></div>
   <section class="sec">
@@ -1014,7 +1017,7 @@ html.i18n-wait body { visibility: hidden; }
           <div class="full checks"><label for="r-fin"><input id="r-fin" type="checkbox"> Финишер или хефтер</label><label for="r-sec"><input id="r-sec" type="checkbox"> Заштита на печатењето</label></div>
         </div>
         <p class="line" id="r-out"></p>
-        <a class="btn" href="tel:+38923111275"><span>Јавете се: <span class="nb">02 3111 275</span></span></a>
+        <a class="btn" href="tel:+38923111275">Побарајте нè</a>
       </aside></div>
     </div>
   </section>
@@ -1025,7 +1028,7 @@ html.i18n-wait body { visibility: hidden; }
   <div class="wrap phead">
     <h1>Сервис</h1>
     <p class="lead">Поправаме Canon печатачи, скенери, мултифункциски апарати и калкулатори. Работиме низ цела Македонија.</p>
-    <div class="cta"><a class="btn" href="tel:+38923111275">Јавете се на сервисот</a></div>
+    <div class="cta"><a class="btn" href="tel:+38923111275">Побарајте нè</a></div>
     <p class="note">Телефон: <b>+389 2 3111 275</b></p>
   </div>
 <div class="rib" aria-hidden="true"><svg viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 96 C 260 20, 520 160, 820 92 S 1250 30, 1440 84 L1440 134 C 1260 84, 1060 156, 820 140 S 280 90, 0 150 Z" fill="url(#gw)"/></svg></div>
@@ -1071,7 +1074,7 @@ html.i18n-wait body { visibility: hidden; }
   <div class="wrap phead">
     <h1>Продукти</h1>
     <p class="lead">Ова е дел од понудата. За цени, залиха и други модели јавете се на тимот за продажба.</p>
-    <div class="cta"><a class="btn" href="tel:+38923111275">Јавете се на продажба</a></div>
+    <div class="cta"><a class="btn" href="tel:+38923111275">Побарајте нè</a></div>
   </div>
   <section class="sec">
     <div class="wrap">
@@ -1144,7 +1147,7 @@ html.i18n-wait body { visibility: hidden; }
           <button class="btn" id="m-send" type="submit">Прати</button>
           <p class="priv">Податоците ги користиме само за да ви одговориме на ова барање. Не ги делиме и не праќаме реклами.</p>
         </form>
-        <a class="btn ghost" href="tel:+38923111275"><span>Или јавете се: <span class="nb">02 3111 275</span></span></a>
+        <a class="btn ghost" href="tel:+38923111275">Побарајте нè</a>
       </aside></div>
     </div>
   </section>
@@ -1231,6 +1234,7 @@ function sayLine(m, d) {
     var raw = (location.hash || "").replace("#", "");
     var h = raw, anchor = null;
     if (raw === "uslugi") { h = "pocetna"; anchor = "uslugi"; }
+    if (raw === "poraka") { h = "kontakt"; anchor = "msg"; raw = "kontakt"; }
     if (names.indexOf(h) < 0) { h = "pocetna"; raw = "pocetna"; }
     names.forEach(function (n) {
       document.getElementById("v-" + n).classList.toggle("on", n === h);
